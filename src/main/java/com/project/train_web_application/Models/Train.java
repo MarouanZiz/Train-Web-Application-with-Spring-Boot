@@ -8,17 +8,16 @@ import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Data @AllArgsConstructor @NoArgsConstructor
-public class User{
+@AllArgsConstructor @NoArgsConstructor @Data
+public class Train {
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE,generator="PASSENG_SEQ")
     @SequenceGenerator(name="PASSENG_SEQ",sequenceName="SEQ_PASSENG_ID", allocationSize = 1)
-    private Long user_id;
-    private String username;
-    private String first_name;
-    private String last_name;
-    private String email;
-    private String password;
-    @OneToMany(mappedBy = "user")
-    private Collection<Booking> bookings;
+    private Long train_id;
+    private String train_name;
+    private Long sets_1_max;
+    private Long sets_2_max;
+    @OneToMany(mappedBy = "train", fetch = FetchType.EAGER)
+    private Collection<Set> sets;
+
 }

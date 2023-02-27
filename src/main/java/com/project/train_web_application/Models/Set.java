@@ -5,20 +5,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Collection;
-
 @Entity
-@Data @AllArgsConstructor @NoArgsConstructor
-public class User{
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Set {
+
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE,generator="PASSENG_SEQ")
     @SequenceGenerator(name="PASSENG_SEQ",sequenceName="SEQ_PASSENG_ID", allocationSize = 1)
-    private Long user_id;
-    private String username;
-    private String first_name;
-    private String last_name;
-    private String email;
-    private String password;
-    @OneToMany(mappedBy = "user")
-    private Collection<Booking> bookings;
+    private Long set_id;
+    @ManyToOne
+    @JoinColumn(name = "ref_train")
+    private Train train;
+    private Long set_Class;
+    private double cost;
+    private Long set_number;
+    private String status;
 }

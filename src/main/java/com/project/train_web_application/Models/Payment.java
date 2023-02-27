@@ -5,20 +5,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.sql.Timestamp;
 
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor
-public class User{
+public class Payment {
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE,generator="PASSENG_SEQ")
     @SequenceGenerator(name="PASSENG_SEQ",sequenceName="SEQ_PASSENG_ID", allocationSize = 1)
-    private Long user_id;
-    private String username;
-    private String first_name;
-    private String last_name;
-    private String email;
-    private String password;
-    @OneToMany(mappedBy = "user")
-    private Collection<Booking> bookings;
+    private Long payment_id;
+    @OneToOne
+    @JoinColumn(name="ref_booking")
+    private Booking booking;
+    private String payment_type;
+    private Timestamp payment_date;
 }

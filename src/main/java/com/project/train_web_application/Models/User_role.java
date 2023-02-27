@@ -1,5 +1,7 @@
 package com.project.train_web_application.Models;
 
+import com.project.train_web_application.Models.compositeKey.User_role_composite;
+
 import javax.persistence.*;
 
 @Entity
