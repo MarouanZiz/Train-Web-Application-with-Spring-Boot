@@ -1,26 +1,56 @@
 package com.project.train_web_application;
 
-import com.project.train_web_application.Models.Passenger;
-import com.project.train_web_application.repositories.PassengerRepository;
+import com.project.train_web_application.Models.Role;
+import com.project.train_web_application.Models.User;
+import com.project.train_web_application.repositories.*;
+
+import com.project.train_web_application.services.UserService.UserService;
+import com.project.train_web_application.services.roleService.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.Date;
 
 @SpringBootApplication
 public class TrainWebApplication {
-PassengerRepository passengerRepository;
+	@Autowired
+	UserRepository userRepository;
+	@Autowired
+	RoleRepository roleRepository;
+
+	@Autowired
+	UserService userService;
+	@Autowired
+	RoleService roleService;
+
 	public static void main(String[] args) {
 		SpringApplication.run(TrainWebApplication.class, args);
 
 	}
+
+		@Bean
+		CommandLineRunner commandLineRunner(){
+		return args -> {
+//			userRepository.save(new User(null,"mr_ziz","Marouan","Baaziz","pop@gmail.com","123",null,null));
+//			System.out.println(userRepository.findById(1L).get().getFirst_name()+" "+userRepository.findById(1L).get().getLast_name());
+//			userRepository.deleteById(2L);
+//			roleRepository.save(new Role(null,"ADMIN",null));
+//			roleRepository.save(new Role(null,"USER",null));
+
+//			User u1 = userRepository.findUserByUsername("Marouan");
+			Role r1 = roleService.getRoleByRoleName("ADMIN");
+			User u1 = userService.getUserByFirstName("Marouan");
+			userService.addUserToRole("mr_ziz","ADMIN");
+//			System.out.println(r1.getRoleName());
+
+		};
+	}
+
+
+
+
+
 
 //	@Bean
 //	CommandLineRunner commandLineRunner(PassengerRepository passengerRepository){

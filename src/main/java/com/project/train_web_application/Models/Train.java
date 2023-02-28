@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
@@ -18,6 +19,6 @@ public class Train {
     private Long sets_1_max;
     private Long sets_2_max;
     @OneToMany(mappedBy = "train", fetch = FetchType.EAGER)
-    private Collection<Set> sets;
+    private Collection<Set> sets = new ArrayList<>();
 
 }

@@ -3,8 +3,11 @@ package com.project.train_web_application.Models;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
@@ -15,10 +18,16 @@ public class User{
     @SequenceGenerator(name="PASSENG_SEQ",sequenceName="SEQ_PASSENG_ID", allocationSize = 1)
     private Long user_id;
     private String username;
-    private String first_name;
-    private String last_name;
+    @Column(name = "first_name", nullable = false)
+    private String firstName;
+    @Column(name = "last_name", nullable = false)
+    private String lastName;
     private String email;
     private String password;
     @OneToMany(mappedBy = "user")
-    private Collection<Booking> bookings;
+    private Collection<Booking> bookings = new ArrayList<>();
+
+
+    @ManyToMany(mappedBy = "users" )
+    private Collection<Role> roles = new ArrayList<>();
 }

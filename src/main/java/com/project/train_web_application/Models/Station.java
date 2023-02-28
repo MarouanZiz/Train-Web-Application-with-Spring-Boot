@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
@@ -19,7 +20,7 @@ public class Station {
     private String gare_name;
     private String city_name;
     @OneToMany(mappedBy = "origin_station", fetch = FetchType.EAGER)
-    private Collection<Voyage> origin_stations;
+    private Collection<Voyage> origin_stations = new ArrayList<>();
     @OneToMany(mappedBy = "desti_station", fetch = FetchType.EAGER)
-    private Collection<Voyage> desti_stations;
+    private Collection<Voyage> desti_stations = new ArrayList<>();
 }
