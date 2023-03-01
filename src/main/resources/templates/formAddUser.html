@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="template"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+</head>
+<body>
+
+<div layout:fragment="contentUI">
+
+    <div class="col-md-6 offset-3 ">
+
+        <form th:method="POST" th:action="@{/admin/saveUser}">
+            <div>
+                <label for="nom">Nom</label>
+                <input id="nom" class="form-control" type="text" name="nom" th:value="${user.firstName}">
+                <span class="text-danger" ></span>
+
+            </div>
+
+            <div>
+                <label for="prenom">Prénom</label>
+                <input id="prenom" class="form-control" type="text" name="prenom" th:value="${user.lastName}" >
+                <span class="text-danger" ></span>
+            </div>
+
+            <div>
+                <label>Email</label>
+                <input class="form-control" type="email" name="email" th:value="${user.email}" >
+                <span class="text-danger" ></span>
+            </div>
+
+            <div>
+
+                <label>Roles :
+
+                        <input type="checkbox"
+                               th:each="role : ${allroles}"
+                            th:text="${role.getRoleName()}"
+                            th:value="${role.getRoleId()}"
+                               th:field="*{roles}"
+                        >
+
+                </label>
+
+
+
+
+
+<!--                <label>Admin</label>-->
+<!--                <input type="checkbox" name="admin" >-->
+
+<!--                <label>Responsable Voyage</label>-->
+<!--                <input type="checkbox" name="resp_voy" >-->
+
+<!--                <label>Responsable Réservation</label>-->
+<!--                <input type="checkbox" name="resp_res" >-->
+
+                <span class="text-danger" ></span>
+
+            </div>
+
+            <div>
+                <label>Active</label>
+                <input type="checkbox" name="active" >
+                <label>Inactive</label>
+                <input type="checkbox" name="inactive" >
+                <span class="text-danger" ></span>
+
+            </div>
+
+
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+
+    </div>
+
+
+</div>
+
+</body>
+</html>

@@ -39,9 +39,10 @@ public class TrainWebApplication {
 //			roleRepository.save(new Role(null,"USER",null));
 
 //			User u1 = userRepository.findUserByUsername("Marouan");
-			Role r1 = roleService.getRoleByRoleName("ADMIN");
-			User u1 = userService.getUserByFirstName("Marouan");
-			userService.addUserToRole("mr_ziz","ADMIN");
+//			Role r1 = roleService.getRoleByRoleName("ADMIN");
+//			User u1 = userService.getUserByFirstName("Marouan");
+//			userService.addUserToRole("mr_ziz","ADMIN");
+//			System.out.println(userRepository.findUserByRolesEquals(new Role(1L,"ADMIN",null)).getFirstName());
 //			System.out.println(r1.getRoleName());
 
 		};

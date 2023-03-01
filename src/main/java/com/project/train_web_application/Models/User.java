@@ -17,13 +17,14 @@ public class User{
     @GeneratedValue(strategy= GenerationType.SEQUENCE,generator="PASSENG_SEQ")
     @SequenceGenerator(name="PASSENG_SEQ",sequenceName="SEQ_PASSENG_ID", allocationSize = 1)
     private Long user_id;
-    private String username;
     @Column(name = "first_name", nullable = false)
     private String firstName;
     @Column(name = "last_name", nullable = false)
     private String lastName;
     private String email;
     private String password;
+    private String username;
+    private Long active;
     @OneToMany(mappedBy = "user")
     private Collection<Booking> bookings = new ArrayList<>();
 

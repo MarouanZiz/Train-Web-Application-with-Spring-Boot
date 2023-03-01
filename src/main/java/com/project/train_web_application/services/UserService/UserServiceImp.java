@@ -29,8 +29,6 @@ public class UserServiceImp implements UserService {
     public void addUserToRole(String userName, String RoleName) {
         User user = userRepository.findUserByUsername(userName);
         Role role = roleRepository.findByRoleName(RoleName);
-        System.out.println(role.getRoleName());
-        System.out.println(user.getFirstName());
         role.getUsers().add(user);
     }
 
