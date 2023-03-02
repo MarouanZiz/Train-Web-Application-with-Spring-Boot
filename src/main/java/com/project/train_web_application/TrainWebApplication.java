@@ -32,7 +32,7 @@ public class TrainWebApplication {
 		@Bean
 		CommandLineRunner commandLineRunner(){
 		return args -> {
-//			userRepository.save(new User(null,"mr_ziz","Marouan","Baaziz","pop@gmail.com","123",null,null));
+//			userRepository.save(new User(null,"Marouan","Baaziz","pop@gmail.com","123","mr_ziz",1L,null,null));
 //			System.out.println(userRepository.findById(1L).get().getFirst_name()+" "+userRepository.findById(1L).get().getLast_name());
 //			userRepository.deleteById(2L);
 //			roleRepository.save(new Role(null,"ADMIN",null));

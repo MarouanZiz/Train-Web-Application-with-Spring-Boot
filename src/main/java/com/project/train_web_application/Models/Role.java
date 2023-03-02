@@ -23,6 +23,6 @@ public class Role implements Serializable {
     private String roleName;
 
 
-    @ManyToMany
+    @ManyToMany(cascade=CascadeType.ALL)
     private Collection<User> users = new ArrayList<>();
 }

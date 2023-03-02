@@ -14,70 +14,89 @@
 
 <div layout:fragment="contentUI">
 
+    <h2 class="display-5">Nouveau Utilisateur</h2>
+
+
     <div class="col-md-6 offset-3 ">
 
-        <form th:method="POST" th:action="@{/admin/saveUser}">
+        <form th:method="POST" th:action="@{/admin/saveUser}" th:object="${user}">
             <div>
                 <label for="nom">Nom</label>
-                <input id="nom" class="form-control" type="text" name="nom" th:value="${user.firstName}">
-                <span class="text-danger" ></span>
+                <input id="nom" class="form-control" type="text" name="nom" th:field="*{firstName}" >
+                <span class="text-danger" th:errors="${user.firstName}" ></span>
 
             </div>
 
             <div>
                 <label for="prenom">Prénom</label>
-                <input id="prenom" class="form-control" type="text" name="prenom" th:value="${user.lastName}" >
-                <span class="text-danger" ></span>
+                <input id="prenom" class="form-control" type="text" name="prenom" th:field="*{lastName}" >
+                <span class="text-danger" th:errors="${user.lastName}" ></span>
             </div>
 
             <div>
                 <label>Email</label>
-                <input class="form-control" type="email" name="email" th:value="${user.email}" >
-                <span class="text-danger" ></span>
+                <input class="form-control" type="email" name="email" th:field="*{email}" >
+                <span class="text-danger" th:errors="${user.email}" ></span>
             </div>
 
             <div>
 
                 <label>Roles :
 
-                        <input type="checkbox"
-                               th:each="role : ${allroles}"
-                            th:text="${role.getRoleName()}"
-                            th:value="${role.getRoleId()}"
-                               th:field="*{roles}"
-                        >
+<!--                        <input type="checkbox"-->
+<!--                               th:each="role : ${allroles}"-->
+<!--                            th:text="${role.getRoleName()}"-->
+<!--                            th:value="${role.getRoleId()}"-->
+<!--                               th:field="*{roles}"-->
+<!--                        >-->
 
                 </label>
 
+                <span th:each="role : ${allroles}">
+
+                    <div class="form-check form-switch">
+                     <input class="form-check-input" type="checkbox" th:value="${role.getRoleId()}" name="roles" id="flexSwitchCheckDefault">
+                         <label class="form-check-label" for="flexSwitchCheckDefault" th:text="${role.getRoleName()}" >Default switch checkbox input</label>
+                    </div>
+
+<!--                    <label th:text="${role.getRoleName()}"></label>-->
+<!--                    <input type="checkbox" th:value="${role.getRoleId()}" name="roles"/>-->
+                </span>
 
 
-
-
-<!--                <label>Admin</label>-->
-<!--                <input type="checkbox" name="admin" >-->
-
-<!--                <label>Responsable Voyage</label>-->
-<!--                <input type="checkbox" name="resp_voy" >-->
-
-<!--                <label>Responsable Réservation</label>-->
-<!--                <input type="checkbox" name="resp_res" >-->
 
                 <span class="text-danger" ></span>
 
             </div>
 
             <div>
+
                 <label>Active</label>
-                <input type="checkbox" name="active" >
+                <input type="radio" name="active" th:value="1" >
                 <label>Inactive</label>
-                <input type="checkbox" name="inactive" >
-                <span class="text-danger" ></span>
+                <input type="radio" name="active" th:value="0" >
+                <span class="text-danger" th:errors="${user.active}" ></span>
 
             </div>
 
 
             <button type="submit" class="btn btn-primary">Save</button>
         </form>
+
+        <div th:switch="${msg_add}" >
+
+            <div class="alert alert-danger" role="alert" th:case="${false}">
+                L'utilisateur est déjà existe !
+            </div>
+
+            <div class="alert alert-success" role="alert" th:case="${true}">
+                L'utilisateur est ajouté
+            </div>
+
+        </div>
+
+
+
 
     </div>
 

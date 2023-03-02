@@ -11,6 +11,8 @@ public interface UserService {
     public void addUserToRole(String userName,String RoleName);
     public User saveUser(User user);
     public Role saveRole(Role role);
+    User findByEmailContainingIgnoreCase(String email);
+
 
 
 }

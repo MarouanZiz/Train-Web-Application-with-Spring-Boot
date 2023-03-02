@@ -41,4 +41,10 @@ public class UserServiceImp implements UserService {
     public Role saveRole(Role role) {
         return roleRepository.save(role);
     }
+
+
+    @Override
+    public User findByEmailContainingIgnoreCase(String email) {
+        return userRepository.findByEmailContainingIgnoreCase(email);
+    }
 }
