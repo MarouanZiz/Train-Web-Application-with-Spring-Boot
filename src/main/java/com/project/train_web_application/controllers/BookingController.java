@@ -48,11 +48,13 @@ public class BookingController {
     }
 
     @PostMapping(path ="/Responsable_voyage/resultats-disponibilites")
-    public String resultatsDispo(
+    public String resultatsDispo(Model model,
             @RequestParam("station_depart") Long station_depart
             ,@RequestParam("station_arrivee") Long station_arrivee
             ,@RequestParam("depart_date") String departDate
             ,@RequestParam("arrival_date") String arrivalDate){
+        model.addAttribute("allStations", stationRepository.findAll());
+
         if (!departDate.equals("") && !arrivalDate.equals("")){
 
 
