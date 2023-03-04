@@ -22,4 +22,15 @@ public interface VoyageService {
                                     Long station_des_id,
                                     LocalDateTime dep_date,
                                     LocalDateTime arr_date);
+
+
+    List<Voyage> getVoyageByParam(Long station_dep_id,
+                                  Long station_des_id,
+                                  LocalDateTime dep_date,
+                                  LocalDateTime arr_date);
+
+
+
 }
+
+

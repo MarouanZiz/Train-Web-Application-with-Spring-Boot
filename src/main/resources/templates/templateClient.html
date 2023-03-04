@@ -5,7 +5,7 @@
 >
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Espace Client</title>
   <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
   <script src="/webjars/bootstrap/5.2.3/js/bootstrap.bundle.js"></script>
 </head>
@@ -28,35 +28,18 @@
         <a class="nav-link disabled" href="#">Disabled</a>
       </li>
 
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" sec:authorize="hasRole('ADMIN')" href="#" role="button" data-bs-toggle="dropdown">Utilisateurs</a>
-        <ul class="dropdown-menu">
-          <li sec:authorize="hasRole('ADMIN')"><a class="dropdown-item" th:href="@{/admin/formAddUser}">Nouveau utilisateur</a></li>
-          <li sec:authorize="hasRole('ADMIN')"><a class="dropdown-item" th:href="@{/admin/formPatients}">Modifier utilisateur</a></li>
-          <li sec:authorize="hasRole('ADMIN')"><a class="dropdown-item" th:href="@{/admin/formPatients}">Lister utilisateurs</a></li>
-          <li><a class="dropdown-item" th:href="@{/user/index}">Chercher</a></li>
-        </ul>
-      </li>
+
 
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" sec:authorize="hasRole('ResponsableReservation')" href="#" role="button" data-bs-toggle="dropdown">Reservation</a>
         <ul class="dropdown-menu">
-          <li sec:authorize="hasRole('ResponsableReservation')"><a class="dropdown-item" th:href="@{/Responsable_reservation/formReservation}">Nouveau Reservation</a></li>
-          <li sec:authorize="hasRole('ResponsableReservation')"><a class="dropdown-item" th:href="@{/admin/formPatients}">Modifier Reservation</a></li>
-          <li sec:authorize="hasRole('ResponsableReservation')"><a class="dropdown-item" th:href="@{/admin/formPatients}">Lister Reservation</a></li>
+          <li sec:authorize="hasRole('ADMIN')"><a class="dropdown-item" th:href="@{/admin/formPatients}">Nouveau Reservation</a></li>
+          <li sec:authorize="hasRole('ADMIN')"><a class="dropdown-item" th:href="@{/admin/formPatients}">Modifier Reservation</a></li>
+          <li sec:authorize="hasRole('ADMIN')"><a class="dropdown-item" th:href="@{/admin/formPatients}">Lister Reservation</a></li>
 
         </ul>
       </li>
 
-      <li class="nav-item dropdown" sec:authorize="hasRole('RsponsableVoyage')" >
-        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Voyage</a>
-        <ul class="dropdown-menu">
-          <li sec:authorize="hasRole('RsponsableVoyage')"><a class="dropdown-item" th:href="@{/Responsable_voyage/formAddVoyage}">Nouveau Voyage</a></li>
-          <li sec:authorize="hasRole('RsponsableVoyage')"><a class="dropdown-item" th:href="@{/Responsable_voyage/formPatients}">Modifier Voyage</a></li>
-          <li sec:authorize="hasRole('RsponsableVoyage')"><a class="dropdown-item" th:href="@{/Responsable_voyage/formPatients}">Lister Voyage</a></li>
-
-        </ul>
-      </li>
 
 
     </ul>

@@ -38,6 +38,42 @@ public interface VoyageRepository extends JpaRepository<Voyage,Long> {
                               @Param("dep_date")  LocalDateTime dep_date ,
                               @Param("arr_date") LocalDateTime arr_date);
 
+    @Query(value = "SELECT v FROM Voyage v WHERE v.origin_station.stationId=:station_dep_id and " +
+            "v.desti_station.stationId=:station_des_id and" +
+            " v.deparature_date=:dep_date and" +
+            " v.arrival_date=:arr_date")
+    public List<Voyage> getVoyageByParam(
+                                           @Param("station_dep_id") Long station_dep_id ,
+                                           @Param("station_des_id") Long station_des_id ,
+                                           @Param("dep_date")  LocalDateTime dep_date ,
+                                           @Param("arr_date") LocalDateTime arr_date);
+
+
+
+    @Query(value = "SELECT v FROM Voyage v WHERE v.origin_station.stationId=:station_dep_id and " +
+            "v.desti_station.stationId=:station_des_id and" +
+            " v.arrival_date=:arr_date")
+    public List<Voyage> getVoyageByParam(
+            @Param("station_dep_id") Long station_dep_id ,
+            @Param("station_des_id") Long station_des_id ,
+            @Param("arr_date") LocalDateTime arr_date);
+
+
+    @Query(value = "SELECT v FROM Voyage v WHERE v.origin_station.stationId=:station_dep_id and " +
+            "v.desti_station.stationId=:station_des_id and" +
+            " v.deparature_date=:dep_date")
+    public List<Voyage> getVoyageByParam2(
+            @Param("station_dep_id") Long station_dep_id ,
+            @Param("station_des_id") Long station_des_id ,
+            @Param("dep_date")  LocalDateTime dep_date);
+
+
+    @Query(value = "SELECT v FROM Voyage v WHERE v.origin_station.stationId=:station_dep_id and " +
+            "v.desti_station.stationId=:station_des_id")
+    public List<Voyage> getVoyageByParam(
+            @Param("station_dep_id") Long station_dep_id ,
+            @Param("station_des_id") Long station_des_id);
+
 
 }
 

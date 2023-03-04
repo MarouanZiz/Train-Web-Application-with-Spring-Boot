@@ -36,7 +36,7 @@ public class VoyageController {
     @Autowired
     private VoyageService voyageService;
 
-    @GetMapping("/admin/formAddVoyage")
+    @GetMapping("/Responsable_voyage/formAddVoyage")
     public String formAddVoyage(Model model){
         model.addAttribute("allStations", stationRepository.findAll());
         model.addAttribute("allTrains", trainRepository.findAll());
@@ -45,7 +45,7 @@ public class VoyageController {
         return "formAddVoyage";
     }
 
-    @PostMapping("/admin/saveVoyage")
+    @PostMapping("/Responsable_voyage/saveVoyage")
     public String saveVoyage(Model model
             ,@RequestParam("station_depart") Long station_depart
             ,@RequestParam("station_arrivee") Long station_arrivee
@@ -70,10 +70,10 @@ public class VoyageController {
         if(voyageService.check_train_voyage(train_depart,station_depart,station_arrivee,dep_date,arr_date).size() == 0){
             voyageRepository.save(voyage);
             redirectAttributes.addFlashAttribute("msg_add",true);
-            return "redirect:/admin/formAddVoyage";
+            return "redirect:/Responsable_voyage/formAddVoyage";
         }else{
             redirectAttributes.addFlashAttribute("msg_add",false);
-            return "redirect:/admin/formAddVoyage";
+            return "redirect:/Responsable_voyage/formAddVoyage";
         }
 
 

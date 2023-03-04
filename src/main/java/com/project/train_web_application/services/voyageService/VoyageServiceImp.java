@@ -38,6 +38,20 @@ public class VoyageServiceImp implements VoyageService {
 
     }
 
+    @Override
+    public List<Voyage> getVoyageByParam(Long station_dep_id, Long station_des_id, LocalDateTime dep_date, LocalDateTime arr_date) {
+        if(dep_date == null && arr_date != null){
+            return voyageRepository.getVoyageByParam(station_dep_id, station_des_id,arr_date);
+        }else if (arr_date == null && dep_date != null){
+            return voyageRepository.getVoyageByParam2(station_dep_id, station_des_id,dep_date);
+        } else if (dep_date == null && arr_date == null) {
+            return voyageRepository.getVoyageByParam(station_dep_id,station_des_id);
+        }
+        return voyageRepository.getVoyageByParam(station_dep_id,station_des_id,dep_date,arr_date);
+    }
+
+
+
 
 //    @Autowired
 //    private JdbcTemplate jdbcTemplate;
