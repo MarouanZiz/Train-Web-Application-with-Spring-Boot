@@ -3,9 +3,11 @@ package com.project.train_web_application.Models;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -25,8 +27,10 @@ public class Voyage {
     @JoinColumn(name="ref_desti_station")
     private Station desti_station;
 
-    private Timestamp deparature_date;
-    private Timestamp arrival_date;
+    private LocalDateTime deparature_date;
+
+    private LocalDateTime arrival_date;
+
 
 
 }

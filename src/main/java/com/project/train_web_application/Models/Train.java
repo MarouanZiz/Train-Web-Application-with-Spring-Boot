@@ -14,10 +14,14 @@ public class Train {
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE,generator="PASSENG_SEQ")
     @SequenceGenerator(name="PASSENG_SEQ",sequenceName="SEQ_PASSENG_ID", allocationSize = 1)
-    private Long train_id;
-    private String train_name;
-    private Long sets_1_max;
-    private Long sets_2_max;
+    @JoinColumn(name="train_id")
+    private Long trainId;
+    @JoinColumn(name="train_name")
+    private String trainName;
+    @JoinColumn(name="sets_1_max")
+    private Long sets1Max;
+    @JoinColumn(name="sets_2_max")
+    private Long sets2Max;
     @OneToMany(mappedBy = "train", fetch = FetchType.EAGER)
     private Collection<Set> sets = new ArrayList<>();
 

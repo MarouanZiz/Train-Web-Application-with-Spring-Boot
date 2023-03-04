@@ -2,6 +2,8 @@ package com.project.train_web_application.controllers;
 
 import com.project.train_web_application.Models.Role;
 import com.project.train_web_application.Models.User;
+import com.project.train_web_application.repositories.StationRepository;
+import com.project.train_web_application.repositories.TrainRepository;
 import com.project.train_web_application.services.UserService.UserService;
 import com.project.train_web_application.services.roleService.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,13 @@ public class UserController {
     private RoleService roleService;
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private StationRepository stationRepository;
+
+    @Autowired
+    private TrainRepository trainRepository;
+
     @GetMapping("/")
     public String test(){
         return "home";
@@ -51,8 +60,6 @@ public class UserController {
                            RedirectAttributes redirectAttributes,
                            Model model,
                            HttpSession session){
-
-
 
 //        model.addAttribute("allroles",roleService.getAllRoles());
         model.addAttribute("allroles",(List)session.getAttribute("allroles"));
@@ -92,6 +99,8 @@ public class UserController {
         redirectAttributes.addFlashAttribute("msg_add",true);
         return "redirect:/admin/formAddUser";
     }
+
+
 
 
 }

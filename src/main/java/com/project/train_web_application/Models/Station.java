@@ -16,9 +16,12 @@ public class Station {
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE,generator="PASSENG_SEQ")
     @SequenceGenerator(name="PASSENG_SEQ",sequenceName="SEQ_PASSENG_ID", allocationSize = 1)
-    private Long gare_id;
-    private String gare_name;
-    private String city_name;
+    @Column(name = "station_id", nullable = false)
+    private Long stationId;
+    @Column(name = "station_name", nullable = false)
+    private String stationName;
+    @Column(name = "city_name", nullable = false)
+    private String cityName;
     @OneToMany(mappedBy = "origin_station", fetch = FetchType.EAGER)
     private Collection<Voyage> origin_stations = new ArrayList<>();
     @OneToMany(mappedBy = "desti_station", fetch = FetchType.EAGER)
