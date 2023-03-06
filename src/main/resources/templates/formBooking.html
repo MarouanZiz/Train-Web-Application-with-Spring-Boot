@@ -87,7 +87,7 @@
             </div>
             <div class="card-body">
                 <h5 class="card-title">   Départ <span th:text="${voyageDisp.deparature_date.format(formatterForHour)}"></span> <span th:text="${stationRepository.findAllByStationId(voyageDisp.origin_station.stationId).getStationName()}"></span>   --------> Arrivée <span th:text="${voyageDisp.arrival_date.format(formatterForHour)}"></span> <span th:text="${stationRepository.findAllByStationId(voyageDisp.desti_station.stationId).getStationName()}"></span> </h5>
-                <p class="card-text"> 00h30min  </p>
+                <p class="card-text">   </p>
                 <a href="#" class="btn btn-primary">Réserver</a>
             </div>
             <div class="card-footer text-muted">

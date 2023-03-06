@@ -99,10 +99,11 @@ public class BookingController {
 
                     voyages =  voyageService.getVoyageByParam(station_depart,station_arrivee,dep_date,arr_date);
 
-            }
+                    //        si le client n'est pas precis date depart et arrivee on l'affiche les train d'aujourd'hui
+                    return getString(nb_passagers, redirectAttributes, voyages, ResultVoyages, formatter, formatterForHour, formatterForDate, now, nowDate);
+                    }
 
-        }else if(!departDate.equals(""))
-        {
+                }else if(!departDate.equals("")) {
 
             LocalDateTime dep_date = LocalDateTime.parse(departDate, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"));
 
@@ -114,6 +115,9 @@ public class BookingController {
             }else{
 
             voyages =  voyageService.getVoyageByParam(station_depart,station_arrivee,dep_date,null);
+
+                //        si le client n'est pas precis date depart et arrivee on l'affiche les train d'aujourd'hui
+                return getString(nb_passagers, redirectAttributes, voyages, ResultVoyages, formatter, formatterForHour, formatterForDate, now, nowDate);
 
             }
 
@@ -132,6 +136,10 @@ public class BookingController {
                 voyages = voyageService.getVoyageByParam(station_depart, station_arrivee, null, arr_date);
 
 
+                //        si le client n'est pas precis date depart et arrivee on l'affiche les train d'aujourd'hui
+                return getString(nb_passagers, redirectAttributes, voyages, ResultVoyages, formatter, formatterForHour, formatterForDate, now, nowDate);
+
+
             }
 
 //          ****  if the user not chose the datetime  ****
@@ -148,39 +156,7 @@ public class BookingController {
                 voyages =  voyageService.getVoyageByParam(station_depart,station_arrivee,null,null);
 
                 //        si le client n'est pas precis date depart et arrivee on l'affiche les train d'aujourd'hui
-                for (Voyage v:voyages) {
-                    dateTimeVoyage = v.getDeparature_date().format(formatter);
-                    dateVoyage = v.getDeparature_date().format(formatterForDate);
-
-
-
-                    if(dateTimeVoyage.compareTo(now)>0 && dateVoyage.compareTo(nowDate)==0){
-                        ResultVoyages.add(v);
-                    }
-
-
-                }
-
-                if(ResultVoyages.size() == 0){
-
-                        redirectAttributes.addFlashAttribute("msg_add",false);
-                        return "redirect:/Responsable_reservation/formReservation";
-
-                }else{
-
-//                    model.addAttribute("ResultVoyages",ResultVoyages);
-                    redirectAttributes.addFlashAttribute("ResultVoyages",ResultVoyages);
-                    redirectAttributes.addFlashAttribute("formatterForHour",formatterForHour);
-                    redirectAttributes.addFlashAttribute("trainRepository",trainRepository);
-                    redirectAttributes.addFlashAttribute("stationRepository",stationRepository);
-                    redirectAttributes.addFlashAttribute("voyageService",voyageService);
-                    redirectAttributes.addFlashAttribute("nombrePassagers",nb_passagers);
-
-
-                    System.out.println("nb passager "+nb_passagers);
-                    return "redirect:/Responsable_reservation/formReservation";
-//                       return "voyagesDisp";
-                }
+                return getString(nb_passagers, redirectAttributes, voyages, ResultVoyages, formatter, formatterForHour, formatterForDate, now, nowDate);
 
             }
 
@@ -206,7 +182,44 @@ public class BookingController {
 //                } );
 //        System.out.println(commentCount);
 
-        return "formBooking";
+//        return "formBooking";
+    }
+
+    private String getString(@RequestParam("nb_passagers") int nb_passagers, RedirectAttributes redirectAttributes, List<Voyage> voyages, List<Voyage> resultVoyages, DateTimeFormatter formatter, DateTimeFormatter formatterForHour, DateTimeFormatter formatterForDate, String now, String nowDate) {
+        String dateTimeVoyage;
+        String dateVoyage;
+        for (Voyage v:voyages) {
+            dateTimeVoyage = v.getDeparature_date().format(formatter);
+            dateVoyage = v.getDeparature_date().format(formatterForDate);
+
+
+
+            if(dateTimeVoyage.compareTo(now)>0 && dateVoyage.compareTo(nowDate)==0){
+                resultVoyages.add(v);
+            }
+
+
+        }
+
+        if(resultVoyages.size() == 0){
+
+            redirectAttributes.addFlashAttribute("msg_add",false);
+            return "redirect:/Responsable_reservation/formReservation";
+
+        }else{
+
+
+            redirectAttributes.addFlashAttribute("ResultVoyages", resultVoyages);
+            redirectAttributes.addFlashAttribute("formatterForHour",formatterForHour);
+            redirectAttributes.addFlashAttribute("trainRepository",trainRepository);
+            redirectAttributes.addFlashAttribute("stationRepository",stationRepository);
+            redirectAttributes.addFlashAttribute("voyageService",voyageService);
+            redirectAttributes.addFlashAttribute("nombrePassagers",nb_passagers);
+
+
+            return "redirect:/Responsable_reservation/formReservation";
+
+        }
     }
 
 //    public PriceByDistance getPriceByDistance(Long idDes,Long idOrigin) {
