@@ -1,5 +1,6 @@
 package com.project.train_web_application.services.voyageService;
 
+import com.project.train_web_application.Models.PriceByDistance;
 import com.project.train_web_application.Models.Voyage;
 import com.project.train_web_application.repositories.VoyageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,8 +50,32 @@ public class VoyageServiceImp implements VoyageService {
         }
         return voyageRepository.getVoyageByParam(station_dep_id,station_des_id,dep_date,arr_date);
     }
+    @Override
+    public PriceByDistance getPriceByDistance(Long idDes, Long idOrigin){
+        return voyageRepository.getPriceByDistance(idDes,idOrigin);
+    }
 
+//    @Override
+//    public double getPriceVoyage(PriceByDistance priceByDistance, Long trainId) {
+//        return getPriceV(priceByDistance,trainId);
+//    }
 
+    public double getPriceV(PriceByDistance priceByDistance, Long trainId,int nbPassagers){
+        double price = 10;
+        if (priceByDistance != null){
+            price = priceByDistance.getPriceDis();
+        }
+
+        if (trainId == 1){
+            price = price*1.2*nbPassagers;
+        } else if (trainId == 2) {
+            price = price*1.3*nbPassagers;
+        }else {
+            price = price*1.5*nbPassagers;
+        }
+
+        return price;
+    }
 
 
 //    @Autowired

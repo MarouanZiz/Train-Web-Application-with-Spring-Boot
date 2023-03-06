@@ -26,4 +26,5 @@ public class Station {
     private Collection<Voyage> origin_stations = new ArrayList<>();
     @OneToMany(mappedBy = "desti_station", fetch = FetchType.EAGER)
     private Collection<Voyage> desti_stations = new ArrayList<>();
+
 }

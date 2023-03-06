@@ -10,16 +10,6 @@
     <title>Nouveau Voyage</title>
     <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
 
-<style>
-
-    /* https://bootsnipp.com/snippets/dGWP */
-    .center{
-        width: 150px;
-        margin: 40px auto;
-
-    }
-
-</style>
 
 <body>
 
@@ -28,8 +18,10 @@
     <h2 class="display-5">Nouveau Reservation</h2>
 
     <div class="col-md-6 offset-3 ">
-
-        <form th:method="POST" th:action="@{/Responsable_voyage/resultats-disponibilites}" >
+        <div class="card">
+            <div class="card-header">Reservation</div>
+            <div class="card-body">
+        <form th:method="POST" th:action="@{/Responsable_reservation/resultats-disponibilites}" >
 
             <div>
                 <label for="station_depart">Ma gare de départ</label>
@@ -64,7 +56,7 @@
 
             <div>
                 <label for="voyageurs">Voyageurs</label>
-                <select id="voyageurs" class="form-select" aria-label="Default select example">
+                <select id="voyageurs" name="nb_passagers" class="form-select" aria-label="Default select example">
                     <option>1</option>
                     <option>2</option>
                 </select>
@@ -73,11 +65,11 @@
 
             <button  type="submit"  class="btn btn-primary mt-3">Chercher</button>
         </form>
-
+            </div>
         <div th:switch="${msg_add}" >
 
             <div class="alert alert-danger" role="alert" th:case="${false}">
-                le train a déjà un voyage !
+                Aucun train n'est disponible
             </div>
 
             <div class="alert alert-success" role="alert" th:case="${true}">
@@ -85,9 +77,24 @@
             </div>
 
         </div>
-
+        </div>
     </div>
 
+    <div class="h-100 d-flex   flex-column  align-items-center justify-content-center mt-3">
+        <div class="card text-center w-50 mb-3 " th:each="voyageDisp : ${ResultVoyages}">
+            <div class="card-header">
+                <span th:text="${trainRepository.findByTrainId(voyageDisp.train.trainId).trainName}"></span> <span th:text="${stationRepository.findAllByStationId(voyageDisp.origin_station.stationId).getStationName()}"></span>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">   Départ <span th:text="${voyageDisp.deparature_date.format(formatterForHour)}"></span> <span th:text="${stationRepository.findAllByStationId(voyageDisp.origin_station.stationId).getStationName()}"></span>   --------> Arrivée <span th:text="${voyageDisp.arrival_date.format(formatterForHour)}"></span> <span th:text="${stationRepository.findAllByStationId(voyageDisp.desti_station.stationId).getStationName()}"></span> </h5>
+                <p class="card-text"> 00h30min  </p>
+                <a href="#" class="btn btn-primary">Réserver</a>
+            </div>
+            <div class="card-footer text-muted">
+                <span th:text="${nombrePassagers}"></span> passager à partir de  <span th:text="${voyageService.getPriceV(voyageService.getPriceByDistance(voyageDisp.desti_station.stationId,voyageDisp.origin_station.stationId),voyageDisp.train.trainId,nombrePassagers)}"></span> DH
+            </div>
+        </div>
+    </div>
 
 </div>
 

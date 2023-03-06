@@ -1,6 +1,7 @@
 package com.project.train_web_application.repositories;
 
 import com.project.train_web_application.Models.Passenger;
+import com.project.train_web_application.Models.PriceByDistance;
 import com.project.train_web_application.Models.Voyage;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -74,7 +75,8 @@ public interface VoyageRepository extends JpaRepository<Voyage,Long> {
             @Param("station_dep_id") Long station_dep_id ,
             @Param("station_des_id") Long station_des_id);
 
-
+@Query(value = "select p from PriceByDistance p where p.ref_desti_station=:idDes and p.ref_origin_station=:idOrigin")
+    public PriceByDistance getPriceByDistance(@Param("idDes")Long idDes,@Param("idOrigin") Long idOrigin);
 }
 
 

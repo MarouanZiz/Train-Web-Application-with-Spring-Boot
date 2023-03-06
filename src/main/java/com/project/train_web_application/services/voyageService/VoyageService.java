@@ -1,5 +1,6 @@
 package com.project.train_web_application.services.voyageService;
 
+import com.project.train_web_application.Models.PriceByDistance;
 import com.project.train_web_application.Models.Voyage;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
@@ -29,8 +30,9 @@ public interface VoyageService {
                                   LocalDateTime dep_date,
                                   LocalDateTime arr_date);
 
-
-
+    public PriceByDistance getPriceByDistance(Long idDes, Long idOrigin);
+//    public double getPriceVoyage(PriceByDistance priceByDistance, Long trainId);
+    public double getPriceV(PriceByDistance priceByDistance, Long trainId,int nbPassagers);
 }
 
 
