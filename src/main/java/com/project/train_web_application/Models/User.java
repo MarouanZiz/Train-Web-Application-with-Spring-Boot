@@ -40,6 +40,7 @@ public class User{
     private Long active;
 
 
+
     @OneToMany(mappedBy = "user")
     private Collection<Booking> bookings = new ArrayList<>();
 

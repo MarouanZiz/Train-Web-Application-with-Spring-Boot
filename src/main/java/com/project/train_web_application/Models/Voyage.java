@@ -16,7 +16,8 @@ public class Voyage {
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE,generator="PASSENG_SEQ")
     @SequenceGenerator(name="PASSENG_SEQ",sequenceName="SEQ_PASSENG_ID", allocationSize = 1)
-    private Long voyage_id;
+    @JoinColumn(name="voyage_id")
+    private Long voyageId;
     @ManyToOne
     @JoinColumn(name="ref_train")
     private Train train;

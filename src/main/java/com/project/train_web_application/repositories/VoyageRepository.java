@@ -28,6 +28,8 @@ public interface VoyageRepository extends JpaRepository<Voyage,Long> {
 //                              @Param("arr_date") LocalDateTime arr_date);
 
 
+    public Voyage findVoyageByVoyageId(Long id);
+
     @Query(value = "SELECT v FROM Voyage v WHERE v.train.trainId = :train_id and" +
             " v.origin_station.stationId=:station_dep_id and " +
             "v.desti_station.stationId=:station_des_id and" +

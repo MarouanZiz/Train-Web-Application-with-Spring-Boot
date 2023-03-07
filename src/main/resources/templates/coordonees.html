@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="template"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Nouveau Voyage</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+</head>
+<body>
+
+<div layout:fragment="contentUI">
+
+    <h2 class="display-5">Qui voyage ?</h2>
+
+<div class="container mt-2 w-50">
+
+    <form  th:method="POST" th:action="@{/resultats-disponibilites/savePassenger}"  >
+    <div class="card">
+        <div class="card-header">
+            Passager 1
+        </div>
+        <div class="card-body">
+
+                <div class="form-group" >
+                    <label for="inputState">Je suis</label>
+                    <select id="inputState" class="form-control" required name="gendre" th:value="${passenger.gendre}" >
+                        <option value="m">M.</option>
+                        <option value="mme">Mme.</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group ">
+                        <label for="nom">Nom</label>
+                        <input type="text" class="form-control" id="nom" required name="lastName" placeholder="Nom" th:value="${passenger.lastName}" >
+                    </div>
+                    <div class="form-group col-auto">
+                        <label for="prenom">Prénom</label>
+                        <input type="text" class="form-control" name="firstName" required id="prenom" placeholder="Prénom" th:value="${passenger.firstName}">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="text" placeholder="Email" required class="form-control" id="email" name="email" th:value="${passenger.email}">
+                    </div>
+
+                    <div class="form-group ">
+                        <label for="tele">Télé</label>
+                        <input type="text" placeholder="Tele" class="form-control" id="tele" name="tele" th:value="${passenger.tele}">
+                    </div>
+                </div>
+
+        </div>
+        <div class="card-footer text-muted">
+        </div>
+    </div>
+
+                <div th:switch="${nbr_passengers}" class="mt-3">
+
+
+                    <div th:case="2">
+
+                        <div class="card">
+                            <div class="card-header">
+                                Passager 2
+                            </div>
+
+                            <div class="card-body">
+
+                    <div class="form-group" >
+                        <label for="inputState2">Je suis</label>
+                        <select id="inputState2" class="form-control" name="genre2" required >
+                            <option value="m">  M.</option>
+                            <option value="mme">Mme.</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group ">
+                            <label for="nom2">Nom</label>
+                            <input type="text" class="form-control" required name="lastName2" id="nom2" placeholder="Nom"  >
+                        </div>
+                        <div class="form-group col-auto">
+                            <label for="prenom2">Prénom</label>
+                            <input type="text" class="form-control" required id="prenom2" name="firstName2" placeholder="Prénom"  >
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email2">Email</label>
+                            <input type="text" placeholder="Email" required class="form-control" name="email2" id="email2"  >
+                        </div>
+
+                        <div class="form-group ">
+                            <label for="tele2">Télé</label>
+                            <input type="text" placeholder="Tele" class="form-control" name="tele2"  id="tele2" >
+                        </div>
+                    </div>
+
+                    </div>
+                            <div class="card-footer text-muted">
+                            </div>
+                        </div>
+
+                </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary mt-3 mb-3 ">Valider</button>
+
+
+    </form>
+
+</div>
+
+
+</div>
+
+</body>
+</html>

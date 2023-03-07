@@ -5,16 +5,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
 @Entity @Data @AllArgsConstructor @NoArgsConstructor
 public class Passenger {
     @Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE,generator="PASSENG_SEQ")
     @SequenceGenerator(name="PASSENG_SEQ",sequenceName="SEQ_PASSENG_ID", allocationSize = 1)
-    private Long passenger_id;
-    private String first_name;
-    private String last_name;
+    private Long passengerId;
+
+    private String firstName;
+
+    private String lastName;
     private String email;
     private Long tele;
+    private String gendre;
 
 }

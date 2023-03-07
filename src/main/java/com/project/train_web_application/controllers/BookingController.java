@@ -1,5 +1,6 @@
 package com.project.train_web_application.controllers;
 
+import com.project.train_web_application.Models.Passenger;
 import com.project.train_web_application.Models.PriceByDistance;
 import com.project.train_web_application.Models.User;
 import com.project.train_web_application.Models.Voyage;
@@ -14,10 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.persistence.EntityManager;
@@ -99,7 +97,7 @@ public class BookingController {
 
                     voyages =  voyageService.getVoyageByParam(station_depart,station_arrivee,dep_date,arr_date);
 
-                    //        si le client n'est pas precis date depart et arrivee on l'affiche les train d'aujourd'hui
+
                     return getString(nb_passagers, redirectAttributes, voyages, ResultVoyages, formatter, formatterForHour, formatterForDate, now, nowDate);
                     }
 
@@ -116,7 +114,7 @@ public class BookingController {
 
             voyages =  voyageService.getVoyageByParam(station_depart,station_arrivee,dep_date,null);
 
-                //        si le client n'est pas precis date depart et arrivee on l'affiche les train d'aujourd'hui
+
                 return getString(nb_passagers, redirectAttributes, voyages, ResultVoyages, formatter, formatterForHour, formatterForDate, now, nowDate);
 
             }
@@ -136,7 +134,7 @@ public class BookingController {
                 voyages = voyageService.getVoyageByParam(station_depart, station_arrivee, null, arr_date);
 
 
-                //        si le client n'est pas precis date depart et arrivee on l'affiche les train d'aujourd'hui
+
                 return getString(nb_passagers, redirectAttributes, voyages, ResultVoyages, formatter, formatterForHour, formatterForDate, now, nowDate);
 
 
@@ -220,6 +218,44 @@ public class BookingController {
             return "redirect:/Responsable_reservation/formReservation";
 
         }
+    }
+
+
+    @GetMapping("/resultats-disponibilites/mes-coordonnees")
+    public String contactDetails(Model model,
+                                 @RequestParam("id")Long idVoyage,
+                                 @RequestParam("nbPers")int nbPers,
+                                 HttpSession httpSession){
+
+        Voyage voyage = voyageRepository.findVoyageByVoyageId(idVoyage);
+        double prixVoyage = voyageService.getPriceV(voyageService.getPriceByDistance(voyage.getDesti_station().getStationId(),voyage.getOrigin_station().getStationId()),voyage.getTrain().getTrainId(),nbPers);
+        httpSession.setAttribute("voyageur",voyage);
+        httpSession.setAttribute("prix_voyage",prixVoyage);
+
+            model.addAttribute("passenger",new Passenger());
+            model.addAttribute("nbr_passengers",nbPers);
+
+        httpSession.setAttribute("nbr_passengers",nbPers);
+        return "coordonees";
+    }
+
+    @PostMapping("/resultats-disponibilites/savePassenger")
+    public String contactDetails(@Valid @ModelAttribute("passenger") Passenger passenger,
+                                 BindingResult bindingResult,
+                                 @RequestParam("firstName2") String firstName2,
+                                 @RequestParam("lastName2") String lastName2,
+                                 @RequestParam("email2") String email2,
+                                 @RequestParam("tele2") Long tele2,
+                                 @RequestParam("gendre2") String gendre2,
+                                 HttpSession httpSession){
+
+        httpSession.setAttribute("passenger1",passenger);
+        httpSession.setAttribute("passenger1",new Passenger(null,firstName2,lastName2,email2,tele2,gendre2));
+
+
+//        if(bindingResult.hasErrors()) return "coordonees";
+
+        return "coordonees";
     }
 
 //    public PriceByDistance getPriceByDistance(Long idDes,Long idOrigin) {
