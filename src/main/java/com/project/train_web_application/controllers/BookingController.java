@@ -1,17 +1,14 @@
 package com.project.train_web_application.controllers;
 
-import com.project.train_web_application.Models.Passenger;
-import com.project.train_web_application.Models.PriceByDistance;
-import com.project.train_web_application.Models.User;
-import com.project.train_web_application.Models.Voyage;
-import com.project.train_web_application.repositories.StationRepository;
-import com.project.train_web_application.repositories.TrainRepository;
-import com.project.train_web_application.repositories.VoyageRepository;
+import com.project.train_web_application.Models.*;
+import com.project.train_web_application.repositories.*;
 import com.project.train_web_application.services.UserService.UserService;
 import com.project.train_web_application.services.roleService.RoleService;
 import com.project.train_web_application.services.voyageService.VoyageService;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -43,10 +40,19 @@ public class BookingController {
     private TrainRepository trainRepository;
 
     @Autowired
+    private PassengerRepository passengerRepository;
+
+    @Autowired
+    private BookingRepository bookingRepository;
+
+    @Autowired
     private EntityManager entityManager;
 
     @Autowired
     private VoyageService voyageService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/Responsable_reservation/formReservation")
     public String formAddUser(Model model,
@@ -183,7 +189,16 @@ public class BookingController {
 //        return "formBooking";
     }
 
-    private String getString(@RequestParam("nb_passagers") int nb_passagers, RedirectAttributes redirectAttributes, List<Voyage> voyages, List<Voyage> resultVoyages, DateTimeFormatter formatter, DateTimeFormatter formatterForHour, DateTimeFormatter formatterForDate, String now, String nowDate) {
+    private String getString(@RequestParam("nb_passagers") int nb_passagers,
+                             RedirectAttributes redirectAttributes,
+                             List<Voyage> voyages,
+                             List<Voyage> resultVoyages,
+                             DateTimeFormatter formatter,
+                             DateTimeFormatter formatterForHour,
+                             DateTimeFormatter formatterForDate,
+                             String now,
+                             String nowDate) {
+
         String dateTimeVoyage;
         String dateVoyage;
         for (Voyage v:voyages) {
@@ -229,7 +244,7 @@ public class BookingController {
 
         Voyage voyage = voyageRepository.findVoyageByVoyageId(idVoyage);
         double prixVoyage = voyageService.getPriceV(voyageService.getPriceByDistance(voyage.getDesti_station().getStationId(),voyage.getOrigin_station().getStationId()),voyage.getTrain().getTrainId(),nbPers);
-        httpSession.setAttribute("voyageur",voyage);
+        httpSession.setAttribute("Onevoyage",voyage);
         httpSession.setAttribute("prix_voyage",prixVoyage);
 
             model.addAttribute("passenger",new Passenger());
@@ -242,20 +257,39 @@ public class BookingController {
     @PostMapping("/resultats-disponibilites/savePassenger")
     public String contactDetails(@Valid @ModelAttribute("passenger") Passenger passenger,
                                  BindingResult bindingResult,
-                                 @RequestParam("firstName2") String firstName2,
-                                 @RequestParam("lastName2") String lastName2,
-                                 @RequestParam("email2") String email2,
-                                 @RequestParam("tele2") Long tele2,
-                                 @RequestParam("gendre2") String gendre2,
-                                 HttpSession httpSession){
+                                 @RequestParam(value="firstName2", required = false) String firstName2,
+                                 @RequestParam(value = "lastName2", required = false) String lastName2,
+                                 @RequestParam(value = "email2", required = false) String email2,
+                                 @RequestParam(value = "tele2", required = false) Long tele2,
+                                 @RequestParam(value = "gendre2", required = false) String gendre2,
+                                 HttpSession httpSession,
+                                 RedirectAttributes redirectAttributes){
 
-        httpSession.setAttribute("passenger1",passenger);
-        httpSession.setAttribute("passenger1",new Passenger(null,firstName2,lastName2,email2,tele2,gendre2));
 
+
+
+        Voyage voyage = (Voyage) httpSession.getAttribute("Onevoyage");
+        double prix = (double) httpSession.getAttribute("prix_voyage");
+        int numberPassenger = (int) httpSession.getAttribute("nbr_passengers");
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User currentuser = userService.getUserByUserName(userDetails.getUsername());
+
+        if (numberPassenger == 1){
+        passengerRepository.save(passenger);
+            httpSession.setAttribute("passenger1",passenger);
+        }else {
+            httpSession.setAttribute("passenger2",new Passenger(null,firstName2,lastName2,email2,tele2,gendre2));
+        }
+
+        Booking booking = new Booking(null,currentuser,passenger,voyage.getTrain(),LocalDateTime.now(),null);
+
+        bookingRepository.save(booking);
+
+        redirectAttributes.addFlashAttribute("msg_add",true);
 
 //        if(bindingResult.hasErrors()) return "coordonees";
 
-        return "coordonees";
+        return "billet";
     }
 
 //    public PriceByDistance getPriceByDistance(Long idDes,Long idOrigin) {

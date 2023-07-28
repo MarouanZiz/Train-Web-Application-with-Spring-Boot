@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @AllArgsConstructor @Data @NoArgsConstructor
@@ -23,7 +24,7 @@ public class Booking {
     @ManyToOne
     @JoinColumn(name = "ref_train", nullable = false)
     private Train train;
-    private java.sql.Timestamp booking_date;
+    private LocalDateTime booking_date;
     @OneToOne(mappedBy = "booking")
     private Payment payment;
 
