@@ -13,6 +13,17 @@
 </ul>
 
 <p>
+    This project utilizes several key technologies and frameworks, including:
+</p>
+
+<ul>
+    <li><strong>Thymeleaf:</strong> Thymeleaf is used as the template engine to create dynamic HTML pages for a seamless user experience.</li>
+    <li><strong>Spring Data JPA:</strong> Spring Data JPA simplifies data access and provides an abstraction layer to interact with the underlying database.</li>
+    <li><strong>Oracle Database:</strong> The application is backed by an Oracle database for efficient and reliable data storage.</li>
+    <li><strong>Spring Security:</strong> Spring Security is employed to handle authentication and authorization, ensuring the security of user data and actions.</li>
+</ul>
+
+<p>
     Our goal is to provide a robust and user-friendly web application for train reservation management. We warmly welcome contributions from the community to improve and extend the application's functionalities, as well as to report any issues or suggest improvements.
 </p>
 
