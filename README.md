@@ -23,6 +23,22 @@
     <li><strong>Spring Security:</strong> Spring Security is employed to handle authentication and authorization, ensuring the security of user data and actions.</li>
 </ul>
 
+
+<h2 style="color:#6c63ff;">Class Diagram:</h2>
+<p>
+    Here is the class diagram representing the structure of the Train Web Application:
+</p>
+
+<div style="padding: 5px;"><img src="diagrams/class_diagram.png" alt="Database Class Diagram"></div>
+
+<h2 style="color:#6c63ff;">Database Class Diagram:</h2>
+<p>
+    Below is the database class diagram representing the structure of the Train Web Application's database. This diagram illustrates the relationships and entities used to store and organize data for the application's functionality.
+</p>
+
+![Database Class Diagram](diagrams/DB_diagram.png)
+
+
 <p>
     Our goal is to provide a robust and user-friendly web application for train reservation management. We warmly welcome contributions from the community to improve and extend the application's functionalities, as well as to report any issues or suggest improvements.
 </p>
