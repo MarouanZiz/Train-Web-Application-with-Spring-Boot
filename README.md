@@ -51,6 +51,3 @@
     If you encounter any issues or have suggestions, feel free to open an issue to inform us.
 </p>
 
-<p>
-    We hope this application will help travelers easily plan their train journeys and enjoy a smooth and pleasant reservation experience. Thank you for your interest in our project! 🚆
-</p>
